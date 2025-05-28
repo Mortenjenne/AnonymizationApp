@@ -7,12 +7,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class StringHandlerTest {
     private StringHandler stringHandler;
     private String testText;
+    private String replacementText;
     private List<String> studentNames;
 
     @BeforeEach
     void setUp() {
         testText = "Anders fik ny gruppe";
-        stringHandler = new StringHandler("Den studerende");
+        replacementText = "Den studerende";
+        stringHandler = new StringHandler();
         studentNames = new ArrayList<>();
         studentNames.add("Anders");
         studentNames.add("Katrine");
@@ -22,7 +24,7 @@ class StringHandlerTest {
 
     @Test
     void replaceText() {
-        String anonymizedText = stringHandler.replaceText(testText, studentNames);
+        String anonymizedText = stringHandler.replaceText(testText, studentNames,replacementText);
         String expected = "Den studerende fik ny gruppe";
 
         assertEquals(expected, anonymizedText);
@@ -31,7 +33,7 @@ class StringHandlerTest {
     @Test
     void textNotReplacedIfItDoesNotContainStudentNames() {
         String text = "Morten kom forsent igen";
-        String anonymizedText = stringHandler.replaceText(text, studentNames);
+        String anonymizedText = stringHandler.replaceText(text, studentNames,replacementText);
         String expected = "Morten kom forsent igen";
 
         assertEquals(expected, anonymizedText);
@@ -41,7 +43,7 @@ class StringHandlerTest {
     @Test
     void replaceMultipleStudentNames() {
         String text = "Anders og Stine arbejdede sammen";
-        String anonymizedText = stringHandler.replaceText(text, studentNames);
+        String anonymizedText = stringHandler.replaceText(text, studentNames,replacementText);
         String expected = "Den studerende og Den studerende arbejdede sammen";
 
         assertEquals(expected, anonymizedText);
@@ -50,7 +52,7 @@ class StringHandlerTest {
     @Test
     void replaceLowerCaseName() {
         String text = "I går afleverede joakim sin opgave til tiden.";
-        String anonymizedText = stringHandler.replaceText(text, studentNames);
+        String anonymizedText = stringHandler.replaceText(text, studentNames,replacementText);
         String expected = "I går afleverede den studerende sin opgave til tiden.";
 
         assertEquals(expected, anonymizedText);
@@ -59,7 +61,7 @@ class StringHandlerTest {
     @Test
     void nameInsideAnotherWordIsNotReplaced() {
         String text = "Joakims opgave var ikke god";
-        String anonymizedText = stringHandler.replaceText(text, studentNames);
+        String anonymizedText = stringHandler.replaceText(text, studentNames,replacementText);
         String expected = "Den studerendes opgave var ikke god";
         assertEquals(expected, anonymizedText);
     }
