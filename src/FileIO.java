@@ -15,7 +15,9 @@ public class FileIO {
             Scanner scanner = new Scanner(fileReader);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                fileData.add(line);
+                if(!line.isEmpty()) {
+                    fileData.add(line);
+                }
             }
             scanner.close();
         } catch (FileNotFoundException e) {
@@ -24,9 +26,9 @@ public class FileIO {
         return fileData;
     }
 
-    public void saveAnonymizedText(List<String> textData) {
+    public void saveAnonymizedText(List<String> textData, String path) {
         try {
-            FileWriter writer = new FileWriter("data/anonymizedText.txt");
+            FileWriter writer = new FileWriter(path);
             for (String text : textData) {
                 writer.write(text + "\n");
             }

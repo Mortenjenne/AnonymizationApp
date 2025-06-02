@@ -6,12 +6,13 @@ public class Main {
     private static FileIO fileIO = new FileIO();
 
     public static void main(String[] args) {
+
         List<String> activityLog = getActivityLog("data/activityLog.txt");
-        List<String> studentNames = addStudentNamesToBeAnomymized();
+        List<String> studentNames = loadStudentNames("data/studentNames.txt");
         List<String> anonymizedList = anonymizeActivityLog(activityLog,studentNames,"Den studerende");
 
         printAnonymizedList(anonymizedList);
-        saveAnonymizedActivityLog(anonymizedList);
+        saveAnonymizedActivityLog(anonymizedList,"data/anonymizedText.txt");
     }
 
     public static void printAnonymizedList(List<String> anonymizedActivityLog) {
@@ -36,20 +37,22 @@ public class Main {
         return anonymizedActivityLog;
     }
 
-    public static List<String> addStudentNamesToBeAnomymized() {
-        List<String> studentNames = new ArrayList<>();
-        studentNames.add("Anders");
-        studentNames.add("Katrine");
-        studentNames.add("Joakim");
-        studentNames.add("Stine");
-        return studentNames;
+    public static List<String> loadStudentNames(String path) {
+        List<String> studentNames = fileIO.loadTextFile(path);
+        List<String> trimmedStudentNames = new ArrayList<>();
+
+        for(String student: studentNames){
+            trimmedStudentNames.add(student.trim());
+        }
+
+        return trimmedStudentNames;
     }
 
     public static List<String> getActivityLog(String path) {
         return fileIO.loadTextFile(path);
     }
 
-    public static void saveAnonymizedActivityLog (List<String> anonymizedActivityLog) {
-        fileIO.saveAnonymizedText(anonymizedActivityLog);
+    public static void saveAnonymizedActivityLog (List<String> anonymizedActivityLog, String path) {
+        fileIO.saveAnonymizedText(anonymizedActivityLog,path);
     }
 }
