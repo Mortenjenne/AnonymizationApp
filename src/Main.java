@@ -46,7 +46,7 @@ public class Main {
         List<String> anonymizedActivityLog = new ArrayList<>();
 
         for (String text: activityLog) {
-            String anonymizedText = stringHandler.replaceTextWithRegex(text, studentNames,replacementText);
+            String anonymizedText = stringHandler.replaceTextWithRegex(text, studentNames, replacementText);
             anonymizedActivityLog.add(anonymizedText);
         }
         return anonymizedActivityLog;
@@ -59,7 +59,6 @@ public class Main {
         for(String student: studentNames){
             trimmedStudentNames.add(student.trim());
         }
-
         return trimmedStudentNames;
     }
 
