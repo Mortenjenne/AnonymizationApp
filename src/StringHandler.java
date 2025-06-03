@@ -26,7 +26,10 @@ public class StringHandler {
 
         String anonymizedText = text;
         for (String studentName : studentNames) {
-            anonymizedText = anonymizedText.replaceAll("\\b" + studentName + "\\b", replacementText);
+
+            anonymizedText = anonymizedText.replaceFirst("\\b" + studentName + "\\b", replacementText);
+
+            anonymizedText = anonymizedText.replaceAll("\\b" + studentName + "\\b", replacementText.toLowerCase());
         }
         return anonymizedText;
     }

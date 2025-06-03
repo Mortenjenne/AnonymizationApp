@@ -34,7 +34,7 @@ public class FileIO {
             }
             writer.close();
         } catch (IOException e) {
-            System.out.println("Couldn't save file");
+            System.out.println("Couldn't save file to " + path);
         }
     }
 

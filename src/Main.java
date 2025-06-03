@@ -7,12 +7,17 @@ public class Main {
 
     public static void main(String[] args) {
 
-        List<String> activityLog = getActivityLog("data/activityLog.txt");
-        List<String> studentNames = loadStudentNames("data/studentNames.txt");
-        List<String> anonymizedList = anonymizeActivityLog(activityLog,studentNames,"Den studerende");
+        String activityLogPath = "data/activityLog.txt";
+        String studentNamesPath = "data/studentNames.txt";
+        String anonymizedTextPath = "data/anonymizedText.txt";
+        String replacementText = "Den studerende";
+
+        List<String> activityLog = loadActivityLog(activityLogPath);
+        List<String> studentNames = loadStudentNames(studentNamesPath);
+        List<String> anonymizedList = anonymizeActivityLog(activityLog,studentNames,replacementText);
 
         printAnonymizedList(anonymizedList);
-        saveAnonymizedActivityLog(anonymizedList,"data/anonymizedText.txt");
+        saveAnonymizedActivityLog(anonymizedList,anonymizedTextPath);
     }
 
     public static void printAnonymizedList(List<String> anonymizedActivityLog) {
@@ -27,6 +32,16 @@ public class Main {
     }
 
     public static List<String> anonymizeActivityLog(List<String> activityLog, List<String> studentNames, String replacementText) {
+        if (activityLog == null || activityLog.isEmpty()) {
+            System.out.println("Tom liste af tekst der skal anonymiseres, Venligst udfyld listen");
+            return new ArrayList<>();
+        }
+
+        if (studentNames == null || studentNames.isEmpty()) {
+            System.out.println("Tom liste af navne der skal anonymiseres, Venligst udfyld listen");
+            return new ArrayList<>();
+        }
+
         StringHandler stringHandler = new StringHandler();
         List<String> anonymizedActivityLog = new ArrayList<>();
 
@@ -48,11 +63,15 @@ public class Main {
         return trimmedStudentNames;
     }
 
-    public static List<String> getActivityLog(String path) {
+    public static List<String> loadActivityLog(String path) {
         return fileIO.loadTextFile(path);
     }
 
     public static void saveAnonymizedActivityLog (List<String> anonymizedActivityLog, String path) {
-        fileIO.saveAnonymizedText(anonymizedActivityLog,path);
+        if(anonymizedActivityLog != null && !anonymizedActivityLog.isEmpty()) {
+            fileIO.saveAnonymizedText(anonymizedActivityLog, path);
+        } else{
+            System.out.println("Ingen liste at gemme, listen er tom");
+        }
     }
 }
