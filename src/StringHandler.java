@@ -1,5 +1,6 @@
 
 import java.util.List;
+import java.util.Locale;
 
 public class StringHandler {
 
@@ -25,6 +26,7 @@ public class StringHandler {
         }
 
         String anonymizedText = text;
+
         for (String studentName : studentNames) {
 
             anonymizedText = anonymizedText.replaceFirst("\\b" + studentName + "\\b", replacementText);

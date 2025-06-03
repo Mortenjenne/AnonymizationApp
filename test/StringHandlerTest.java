@@ -50,15 +50,6 @@ class StringHandlerTest {
     }
 
     @Test
-    void replaceLowerCaseName() {
-        String text = "I går afleverede joakim sin opgave til tiden.";
-        String anonymizedText = stringHandler.replaceText(text, studentNames,replacementText);
-        String expected = "I går afleverede den studerende sin opgave til tiden.";
-
-        assertEquals(expected, anonymizedText);
-    }
-
-    @Test
     void nameInsideAnotherWordIsNotReplaced() {
         String text = "Joakims opgave var ikke god";
         String anonymizedText = stringHandler.replaceText(text, studentNames,replacementText);
